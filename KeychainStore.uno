@@ -24,12 +24,12 @@ public class KeychainStore:NativeModule
     NSString *account = @"com.my.useridentifier";
     NSString *service = @"com.myapp";
     NSMutableDictionary *keychainItem = [NSMutableDictionary dictionary];
-    keychainItem[(id)kSecClass] = (id)kSecClassGenericPassword;
-    keychainItem[(id)kSecAttrService] = service;
-    keychainItem[(id)kSecAttrAccount] = account;
-    keychainItem[(id)kSecAttrSynchronizable] = (id)kCFBooleanTrue;
-    keychainItem[(id)kSecReturnData] = (id)kCFBooleanTrue;
-    keychainItem[(id)kSecMatchLimit] = (id)kSecMatchLimitOne;
+    keychainItem[(__bridge id)kSecClass] = (__bridge id)kSecClassGenericPassword;
+    keychainItem[(__bridge id)kSecAttrService] = service;
+    keychainItem[(__bridge id)kSecAttrAccount] = account;
+    keychainItem[(__bridge id)kSecAttrSynchronizable] = (__bridge id)kCFBooleanTrue;
+    keychainItem[(__bridge id)kSecReturnData] = (__bridge id)kCFBooleanTrue;
+    keychainItem[(__bridge id)kSecMatchLimit] = (__bridge id)kSecMatchLimitOne;
     CFDataRef result = nil;
     OSStatus sts = SecItemCopyMatching((__bridge CFDictionaryRef)keychainItem, (CFTypeRef *)&result);
     NSLog(@"Fetch Error Code: %d", (int)sts);
