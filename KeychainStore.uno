@@ -35,12 +35,12 @@ public class KeychainStore:NativeModule
     NSLog(@"Fetch Error Code: %d", (int)sts);
     if(sts == noErr)
     {
-        NSLog(@"Password Found!");
+        NSLog(@"Identity Found!");
         NSData *resultData = (__bridge_transfer NSData *)result;
         NSString *password = [[NSString alloc] initWithData:resultData encoding:NSUTF8StringEncoding];
         return password;
     }else{
-        NSLog(@"Password NOT Found!");
+        NSLog(@"Identity NOT Found! Create one.");
         NSString *pw = [[NSUUID UUID]UUIDString];
         NSMutableDictionary *keychainItem = [NSMutableDictionary dictionary];
         keychainItem[(__bridge id)kSecClass] = (__bridge id)kSecClassGenericPassword;
@@ -49,7 +49,6 @@ public class KeychainStore:NativeModule
         keychainItem[(__bridge id)kSecAttrSynchronizable] = (__bridge id)kCFBooleanTrue;
         keychainItem[(__bridge id)kSecValueData] = [pw dataUsingEncoding:NSUTF8StringEncoding];
         OSStatus sts = SecItemAdd((__bridge CFDictionaryRef)keychainItem, NULL);
-        NSLog(@"Save Error Code: %d", (int)sts);
         return pw;
     }
   @}
